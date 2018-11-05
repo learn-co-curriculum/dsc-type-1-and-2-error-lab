@@ -46,16 +46,15 @@ sns.set(color_codes=True)
 
 ```python
 # Create a population with mean=100 and sd=20 and size = 1000
-pop = None
-
-# Plot the visualisation using sns.distplot()
-#sns.distplot(pop)
+pop = np.random.normal(100, 20, 1000)
+pop.dtype
+sns.distplot(pop)
 ```
 
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a1337fd30>
+    <matplotlib.axes._subplots.AxesSubplot at 0x18648fc0780>
 
 
 
@@ -65,29 +64,41 @@ pop = None
 
 Lets take two sample from this population and comment of the difference between their and means and standard deviations. How would you ensure the independance between elements of these samples? 
 
-Lets take two samples from above population to compare them. 
+
+```python
+k = 100
+sample1 = np.random.choice(pop,100,replace=True)
+
+print ("Sample 1 Summary")
+stats.describe(sample1)
+```
+
+    Sample 1 Summary
+
+
+
+
+
+    DescribeResult(nobs=100, minmax=(48.805213677063804, 150.65090167588255), mean=96.24673360637617, variance=423.20457474058924, skewness=-0.05353301922536613, kurtosis=-0.29302775964422034)
+
+
 
 
 ```python
-# Take a sample of size 100 with replacement from above population
-sample1 = None
-
-# Use stats.describe to describe the sample statistics
-
-# Sample 1 Summary
-# DescribeResult(nobs=100, minmax=(42.30492781555637, 153.13001398377526), mean=98.78710443895723, 
-# variance=471.2198655338474, skewness=-0.23139125907111105, kurtosis=-0.015689230868860538)
+sample2 = np.random.choice(pop,100,replace=True)
+print ("Sample 2 Summary")
+stats.describe(sample2)
 ```
 
+    Sample 2 Summary
 
-```python
-sample2 = None
 
-# Sample 1 Summary
 
-# DescribeResult(nobs=100, minmax=(42.30492781555637, 148.41214418333334), mean=95.70404077387242, 
-# variance=473.8268064217018, skewness=-0.12469782771105901, kurtosis=0.0399787353710388)
-```
+
+
+    DescribeResult(nobs=100, minmax=(57.96868014684502, 159.29406605999827), mean=102.76786471724154, variance=420.45658021864733, skewness=0.29145404089799065, kurtosis=0.7249842236748019)
+
+
 
 We can see can see that if we take two samples from this population, the difference between the mean of samples 1 and 2 is very small small (this can be tried repeatedly). We must sample with replacement in order to ensure the independance assumption between elements of the sample. 
 
@@ -97,30 +108,29 @@ We can run two sample t-test with independance assumption on these sample and as
 
 
 ```python
-# test the sample means by running a t-test 
-
-# Ttest_indResult(statistic=1.0028959198575151, pvalue=0.3171351379653653)
+# test the sample means
+stats.ttest_ind(sample1, sample2)
 ```
 
 
 
 
-    Ttest_indResult(statistic=1.0028959198575151, pvalue=0.3171351379653653)
+    Ttest_indResult(statistic=-2.245116623023133, pvalue=0.02586635243662942)
 
 
 
 
 ```python
-# Visualise both samples as PDfs to view similarity/differences
+plt.figure("Test Samples")
+sns.distplot(sample1, label='Sample1') 
+sns.distplot(sample2, label='Sample2')
+plt.legend()
+plt.show()
+
 ```
 
 
-```python
-
-```
-
-
-![png](index_files/index_12_0.png)
+![png](index_files/index_11_0.png)
 
 
 ### Simulating Type I and II errors
@@ -151,15 +161,16 @@ Next, we shall see how alpha affects the rate of type 1 errors.
 
 import pandas as pd
 
-numTests = None
-alphaSet = None
+numTests = 100
+alphaSet = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
 columns = ['err', 'p_val', 'alpha']
 sigTests = pd.DataFrame(columns=columns)
 
 # Create a population with mean=100 and sd=20 and size = 1000
-pop = None
+pop = np.random.normal(100, 20, 1000)
 
-
+# Create a counter for dataframe index values
+counter = 1
 
 
 ```
@@ -168,43 +179,107 @@ pop = None
 ```python
 # Run the t-test on samples from distribution numTests x slphaSet times
 
-# Create a counter for dataframe index values
-counter = 1
-
-# run a for loop for range of tests in numTests
-
-    # another for loop for all values of alpha in alphaSet
+for i in range(1,numTests+1):
     
+    for alpha in alphaSet:
 
-        # take two samples from the same population with replacement
-            samp1 = None
-            samp2 = None
+        # take two samples from the same population
+            samp1 = np.random.choice(pop,100,replace=True)
+            samp2 = np.random.choice(pop,100,replace=True)
 
-            # test sample means through independant t test
-            result = None
+            # test sample means
+            result = stats.ttest_ind(samp1, samp2)
 
-            # Evaluate whether Null hypothesis for TYPE I error and store success/failure towards rejecting null hypothesis, 
-            # the p value and alpha in the dataframe defined above
-            
-  
-            # Increment the counter 
+            # Evaluate whether Null hypothesis for TYPE I error
+            if result[1] < alpha:
+                 sigTests.loc[counter] = [1, result[1], alpha]
+            else:
+                 sigTests.loc[counter] = [0, result[1], alpha]
 
+            counter += 1
 ```
+
+
+```python
+sigTests.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>err</th>
+      <th>p_val</th>
+      <th>alpha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.035702</td>
+      <td>0.001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.415147</td>
+      <td>0.010</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.265434</td>
+      <td>0.050</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.503467</td>
+      <td>0.100</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+      <td>0.413219</td>
+      <td>0.200</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 Now we have to summarize the results, this is done using pandas groupby() method which sums the “err” column for each level of alpha. The groupby method iterates over each value of alpha, selecting the type 1 error column for all rows with a specific level of alpha and then applies the sum function to the selection. 
 
 
 ```python
 # group type 1 error by values of alpha
-group_error = None
-
-# plot Type 1 error with respect to value of alpha 
+group_error = sigTests.groupby('alpha')['err'].sum()
+group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 ```
 
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a1c309a90>
+    <matplotlib.axes._subplots.AxesSubplot at 0x1864c686710>
 
 
 
@@ -226,30 +301,47 @@ This error describes a situation where you fail to reject the null hypothesis wh
 ```python
 # Solution
 
-numTests = None
-diff = None
-ahpha_set =  None
+numTests = 1000
+diff = 10
+ahpha_set =  [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
 columns = ['err', 'p_val', 'alpha']
 sigTests2 = pd.DataFrame(columns=columns)
 
 counter = 1
 
-# Change the logic defined above to calculate type two error
+for i in range(1,numTests+1):
+    
+    for alpha in alphaSet:
+
+        # take two samples from different populations
+            samp1 = np.random.normal(100, 20, 100)
+            samp2 = np.random.normal(100+diff, 20, 100)
+
+            # test sample means
+            result = stats.ttest_ind(samp1, samp2)
+
+            # Evaluate the Null hypothesis for TYPE II error (Note > as compared to < previously)
+            if result[1] > alpha:
+                 sigTests2.loc[counter] = [1, result[1], alpha]
+            else:
+                 sigTests2.loc[counter] = [0, result[1], alpha]
+
+            counter += 1
 ```
 
 Count of number of TYPE II errors according to alpha
 
 
 ```python
-group_error2 = None
+group_error2 = sigTests2.groupby('alpha')['err'].sum()
 
-# Plot type 2 errors with respect to alpha
+group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 ```
 
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a1c36c518>
+    <matplotlib.axes._subplots.AxesSubplot at 0x1864c6ce7b8>
 
 
 
@@ -278,6 +370,7 @@ similarly, if we decide to use a very small value of alpha, it'll change the out
 From above, we can see that in statistical hypothesis testing, the more we try and avoid a Type I error (false positive), the more likely a Type II error (false negative) will occur. 
 
 ## Summary
+
 The statstical key point here is that there is always a trade off between false positives and false negatives. By increasing alpha the number of false positives increases but the number of false negatives decreases as shown in bar graphs. The value of alpha=0.05 is considered a reasonable compromise between these two types of errors. Within the concept of “signifigance” there is embedded a trade-off between these two types of errors. 
 
 > Think of “signifigance” as a compromise, between false positives and negatives, not as absolute determination.
