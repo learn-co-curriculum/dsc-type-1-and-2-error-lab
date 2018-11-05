@@ -1,15 +1,19 @@
 
-## Understanding Statistical Errors (TYPE I and II)
+# Type 1 and Type 2 errors
 
-## SWBATS
+## Introduction
 
-* Describe and differentiate between TYPE I and TYPE II errors.
-* Understand alpha and beta for representing false positive and false negative values.
-* Simulate TYPE I and TYPE II errors with alpha control to observe the output of an experiment. 
-* Explain why alpha = 0.5 is chosen as a cut off point for rejecting NULL hypothesis in most scientific experiments. 
+In this lab, you'll run some of your own simulations to learn more about type 1 and type 2 errors. Remember that, the result of a statistical hypothesis test and the corresponding decision of whether to reject or accept the null hypothesis is not infallible. A test provides evidence for or against the null hypothesis and then you decide whether to accept or reject it based on that evidence, but the evidence may lack the strength to arrive at the correct conclusion. Incorrect conclusions made from hypothesis tests fall in one of two categories, i.e. [Type 1 and Type 2 erros](https://en.wikipedia.org/wiki/Type_I_and_type_II_errors) By running some of these simulations, you should have a better idea of why a 95% confidence level is often used for hypothesis testing.
 
 
-The result of a statistical hypothesis test and the corresponding decision of whether to reject or accept the null hypothesis is not infallible. A test provides evidence for or against the null hypothesis and then you decide whether to accept or reject it based on that evidence, but the evidence may lack the strength to arrive at the correct conclusion. Incorrect conclusions made from hypothesis tests fall in one of two categories, i.e. [Type 1 and Type 2 erros](https://en.wikipedia.org/wiki/Type_I_and_type_II_errors)
+## Objectives
+
+You will be able to:
+
+* Explain why alpha = 0.05 is chosen as the cut off point for rejecting Null hypothesis in most scientific experiments
+* Simulate Type I and Type II errors with alpha control to observe the output of an experiment
+* Describe and differentiate between TYPE I and TYPE II errors
+* Understand alpha and beta for representing false positive and false negative values
 
 ### Alpha and Beta
 
@@ -56,7 +60,7 @@ pop = None
 
 
 
-![png](index_files/index_7_1.png)
+![png](index_files/index_5_1.png)
 
 
 Lets take two sample from this population and comment of the difference between their and means and standard deviations. How would you ensure the independance between elements of these samples? 
@@ -116,7 +120,7 @@ We can run two sample t-test with independance assumption on these sample and as
 ```
 
 
-![png](index_files/index_14_0.png)
+![png](index_files/index_12_0.png)
 
 
 ### Simulating Type I and II errors
@@ -205,7 +209,7 @@ group_error = None
 
 
 
-![png](index_files/index_20_1.png)
+![png](index_files/index_18_1.png)
 
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE I errors also increase.  
@@ -250,7 +254,7 @@ group_error2 = None
 
 
 
-![png](index_files/index_26_1.png)
+![png](index_files/index_24_1.png)
 
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE II errors decreases. 
@@ -273,8 +277,7 @@ similarly, if we decide to use a very small value of alpha, it'll change the out
 
 From above, we can see that in statistical hypothesis testing, the more we try and avoid a Type I error (false positive), the more likely a Type II error (false negative) will occur. 
 
-### Conclusion
-
+## Summary
 The statstical key point here is that there is always a trade off between false positives and false negatives. By increasing alpha the number of false positives increases but the number of false negatives decreases as shown in bar graphs. The value of alpha=0.05 is considered a reasonable compromise between these two types of errors. Within the concept of “signifigance” there is embedded a trade-off between these two types of errors. 
 
 > Think of “signifigance” as a compromise, between false positives and negatives, not as absolute determination.
