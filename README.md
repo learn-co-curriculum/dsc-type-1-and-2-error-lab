@@ -1,6 +1,6 @@
 
 
-# Type 1 and Type 2 errors
+# Type 1 and Type 2 errors - Lab
 
 ## Introduction
 
@@ -16,7 +16,7 @@ You will be able to:
 * Describe and differentiate between TYPE I and TYPE II errors
 * Understand alpha and beta for representing false positive and false negative values
 
-### Alpha and Beta
+## Alpha and Beta
 
 **Alpha (α):** is the probability of a type I error i.e. finding a difference when a difference does not exist. 
 
@@ -134,7 +134,7 @@ plt.show()
 ![png](index_files/index_11_0.png)
 
 
-### Simulating Type I and II errors
+## Simulating Type I and II errors
 
 ### Type I error
 TYPE I error describes a situation where you reject the null hypothesis when it is actually true. This type of error is also known as a "false positive" or "false hit". The type 1 error rate is equal to the significance level α, so setting a higher confidence level (and therefore lower alpha) reduces the chances of getting a false positive.
@@ -294,7 +294,7 @@ Grouped data clearly shows that as value of alpha is increases from .001 to 0.5,
 
 This error describes a situation where you fail to reject the null hypothesis when it is actually false. Type II error is also known as a "false negative" or "miss". The higher your confidence level, the more likely you are to make a type II error.
 
-### How alpha affects the prevalence of TYPE II errors.
+## How alpha affects the prevalence of TYPE II errors.
 
 > **Exercise** Write a code similar to above except samples should be taken from two different populations. introduce a new variable to represent the difference between two poulations. The hypothesis test should, in most cases, reject the Null hypothesis as samples belong to different populations, except, in extreme cases where there is no significant difference between samples i.e. a TYPE II error (False Negatives). Code should reflect how rate of false negatives is affected by alpha. 
 
