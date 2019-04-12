@@ -182,41 +182,21 @@ To test your function:
 
 
 ```python
-# Solution 
-
-import pandas as pd
-
-# def type_1_error(num_tests, alpha_set, columns):
-    
-numTests = 1000
-alphaSet = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
-columns = ['err', 'p_val', 'alpha']
-sigTests = pd.DataFrame(columns=columns)
-
-# Create a population with mean=100 and sd=20 and size = 1000
-pop = np.random.normal(100, 20, 1000)
-
-# Create a counter for dataframe index values
-counter = 1
-
-
-```
-
-
-```python
 def type_1_error(population, num_tests, alpha_set):
     """
     Parameters
     ----------
     population: ndarray
-        A random normal distribution with a set mu, 
+        A random normal distribution
     num_tests: int
-        The 
+        The number of hypothesis tests to be computed
+    alpha_set: list
+        List of alpha levels
     
     Returns
     ----------
     sig_tests : DataFrame
-        A dataframe containing the columns 'type_1_error', 'p_value', and 'alpha'
+        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
     """
     columns = ['type_1_error','p_val','alpha']
     sig_tests = pd.DataFrame(columns=columns)
@@ -244,28 +224,33 @@ def type_1_error(population, num_tests, alpha_set):
     return sig_tests
 ```
 
-Now we have to summarize the results, this is done using pandas groupby() method which sums the “err” column for each level of alpha. The groupby method iterates over each value of alpha, selecting the type 1 error column for all rows with a specific level of alpha and then applies the sum function to the selection. 
+Now we have to summarize the results, this is done using pandas groupby() method which sums the “type_1_error” column for each level of alpha. The groupby method iterates over each value of alpha, selecting the type 1 error column for all rows with a specific level of alpha and then applies the sum function to the selection. 
 
 
 ```python
 # group type 1 error by values of alpha
 pop = np.random.normal(100, 20, 1000)
-numTests = 1000
-alphaSet = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
-sig_tests_1 = type_1_error(pop, numTests, alphaSet)
-group_error = sigTests.groupby('alpha')['err'].sum()
+num_tests = 1000
+alpha_set = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
+sig_tests_1 = type_1_error(pop, num_tests, alpha_set)
+group_error = sig_tests_1.groupby('alpha')['type_1_error'].sum()
 group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-1-38bd874a0f40> in <module>()
+          1 # group type 1 error by values of alpha
+    ----> 2 pop = np.random.normal(100, 20, 1000)
+          3 numTests = 1000
+          4 alphaSet = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
+          5 sig_tests_1 = type_1_error(pop, numTests, alphaSet)
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a225d2780>
-
-
-
-
-![png](index_files/index_14_1.png)
+    NameError: name 'np' is not defined
 
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE I errors also increase. 
@@ -355,9 +340,9 @@ Now, create a visualiztion that will represent each one of these decisions.
 ```python
 pop = np.random.normal(100, 20, 1000)
 pop2 = np.random.normal(110, 20, 1000)
-numTests = 1000
-alphaSet = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
-sig_tests_2 = type_2_error(pop,pop2,numTests,alphaSet)
+num_tests = 1000
+alpha_set = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
+sig_tests_2 = type_2_error(pop,pop2,num_tests,alpha_set)
 
 group_error2 = sig_tests_2.groupby('alpha')['type_2_error'].sum()
 group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
@@ -371,7 +356,7 @@ group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 
 
 
-![png](index_files/index_18_1.png)
+![png](index_files/index_17_1.png)
 
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE II errors decreases. 
