@@ -10,18 +10,18 @@ In this lab, you'll run some of your own simulations to learn more about type 1 
 
 You will be able to:
 
-* Explain why alpha = 0.05 is chosen as the cut off point for rejecting Null hypothesis in most scientific experiments
+* Explain why alpha = 0.05 is chosen as the cutoff point for rejecting the null hypothesis in most scientific experiments
 * Simulate Type I and Type II errors with alpha control to observe the output of an experiment
 * Describe and differentiate between TYPE I and TYPE II errors
 * Understand alpha and beta for representing false positive and false negative values
 
 ## Alpha and Beta
 
-**Alpha (α):** is the probability of a type I error i.e. finding a difference when a difference does not exist. 
+**Alpha ($\alpha$):** is the probability of a Type I error i.e. finding a difference when a difference does not exist. 
 
 Most medical literature uses an alpha cut-off of 5% (0.05), indicating a 5% chance that a significant difference is actually due to chance and is not a true difference. 
 
-**Beta (β):** is the probability of a type II error i.e. not detecting a difference when one actually exists. 
+**Beta ($\beta$):** is the probability of a Type II error i.e. not detecting a difference when one actually exists. 
 
 Beta is directly related to study power (Power = 1 – β) which you will investigate further in the next lesson. Most medical literature uses a beta cut-off of 20% (0.2), indicating a 20% chance that a significant difference is missed. 
 
@@ -67,7 +67,7 @@ sns.distplot(pop)
 ![png](index_files/index_3_2.png)
 
 
-Now take two samples from this population and comment of the difference between their and means and standard deviations. How would you ensure the independance between elements of these samples? 
+Now take two samples from this population and comment on the difference between their means and standard deviations. How would you ensure the independence between the elements of these samples? 
 
 
 ```python
@@ -107,9 +107,9 @@ stats.describe(sample2)
 
 You can see can see that if you took two samples from this population, the difference between the mean of samples 1 and 2 is very small (this can be tried repeatedly). You must sample with replacement in order to ensure the independence assumption between elements of the sample. 
 
-There is, however, still a probability of seeing a very large difference between values, even though they’re estimates of the same population parameters. In a statistical setting you’d interpret these unusually large differences as evidence that the two samples are statistically different. It depends on how you define statistical significance. In statistical tests this is done by setting a significance threshold `α` (alpha). Alpha controls how often we’ll get a type 1 error. A type 1 error occurs when the statistical test erroneously indicates a significant result.
+There is, however, still a probability of seeing a very large difference between values, even though they’re estimates of the same population parameters. In a statistical setting, you’d interpret these unusually large differences as evidence that the two samples are statistically different. It depends on how you define statistical significance. In statistical tests, this is done by setting a significance threshold `α` (alpha). Alpha controls how often we’ll get a type 1 error. A type 1 error occurs when the statistical test erroneously indicates a significant result.
 
-You can run two sample t-test with independance assumption on these samples and, as expected, the null hypothesis will fail to be rejected due to similarities between distributions. You can also visualize the distribution to confirm the similarity between means and SDs. 
+You can run two-sample t-test with independence assumption on these samples and, as expected, the null hypothesis will fail to be rejected due to similarities between distributions. You can also visualize the distribution to confirm the similarity between means and SDs. 
 
 
 ```python
@@ -170,7 +170,7 @@ Next, we shall see how alpha affects the rate of type 1 errors.
 Within `type_1_error`, you should:
 
 1. Repeatedly take two random samples from population and run independent t-tests.    
-2. Store P_value, alpha and a boolean variable to show whether the null hypothesis _was rejected_ or not (i.e. if p-value is less than alpha), for each test
+2. Store P_value, alpha and a boolean variable to show whether the null hypothesis ** was rejected ** or not (i.e. if p-value is less than alpha), for each test
 
 To test your function:
 
@@ -226,6 +226,8 @@ def type_1_error(population, num_tests, alpha_set):
 
 Now we have to summarize the results, this is done using pandas groupby() method which sums the “type_1_error” column for each level of alpha. The groupby method iterates over each value of alpha, selecting the type 1 error column for all rows with a specific level of alpha and then applies the sum function to the selection. 
 
+What's the relationship between alpha and Type 1 errors?
+
 
 ```python
 # group type 1 error by values of alpha
@@ -261,7 +263,7 @@ This error describes a situation where you fail to reject the null hypothesis wh
 
 ## How alpha affects the prevalence of TYPE II errors.
 
-**Exercise** Write a function similar to the above except samples should be taken from two different populations. Introduce a new variable to represent the difference between two poulations. This difference in the population should be added (or subtracted from the mean of the  The hypothesis test should, in most cases, reject the Null hypothesis as samples belong to different populations, except, in extreme cases where there is no significant difference between samples i.e. a TYPE II error (False Negatives). Code should reflect how rate of false negatives is affected by alpha. 
+**Exercise** Write a function called `type_2_error` similar to the above except samples should be taken from two different populations.  The hypothesis test should, in most cases, reject the null hypothesis as the samples belong to different populations, except, in extreme cases where there is no significant difference between samples i.e. a TYPE II error (False Negatives). Your function should demonstrate how the rate of false negatives is affected by alpha. 
 
 `type_2_error` should take in the parameters:
 
@@ -277,7 +279,7 @@ This error describes a situation where you fail to reject the null hypothesis wh
 Within `type_2_error`, you should:
 
 1. Repeatedly take two random samples from population and run independent t-tests.    
-2. Store p_value, alpha and a boolean variable to show whether the null hypothesis _failed to be rejected_ or not (i.e. if p-value is less than alpha), for each test
+2. Store p_value, alpha and a boolean variable to show whether the null hypothesis **failed to be rejected** or not (i.e. if p-value is less than alpha), for each test
 
 To test your function:
 
@@ -334,7 +336,7 @@ def type_2_error(population, population_2, num_tests, alpha_set):
     return sig_tests
 ```
 
-Now, create a visualiztion that will represent each one of these decisions.
+Now, create a visualization that will represent each one of these decisions. What's the relationship between alpha and Type 2 errors?
 
 
 ```python
@@ -372,7 +374,7 @@ If you decide to use a large value for alpha :
 * The risk of a Type II error (false negative) is REDUCED
 * Risk of a Type I error (false positive) is INCREASED
 
-similarly, if you decide to use a very small value of alpha, it'll change the outcome as:
+Similarly, if you decide to use a very small value of alpha, it'll change the outcome as:
 * Increases the chance of accepting the null hypothesis
 * The risk of a Type I error (false positive) is REDUCED
 * Risk of a Type II error (false negative) is INCREASED
