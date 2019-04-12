@@ -60,7 +60,7 @@ sns.distplot(pop)
 
 
 
-![png](index_files/index_5_1.png)
+![png](index_files/index_3_1.png)
 
 
 Lets take two sample from this population and comment of the difference between their and means and standard deviations. How would you ensure the independance between elements of these samples? 
@@ -131,7 +131,7 @@ plt.show()
 ```
 
 
-![png](index_files/index_11_0.png)
+![png](index_files/index_9_0.png)
 
 
 ## Simulating Type I and II errors
@@ -285,7 +285,7 @@ group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 
 
 
-![png](index_files/index_18_1.png)
+![png](index_files/index_15_1.png)
 
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE I errors also increase.  
@@ -347,7 +347,7 @@ group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 
 
 
-![png](index_files/index_24_1.png)
+![png](index_files/index_19_1.png)
 
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE II errors decreases. 
