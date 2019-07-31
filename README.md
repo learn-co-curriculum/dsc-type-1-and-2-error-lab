@@ -42,6 +42,20 @@ import seaborn as sns
 sns.set(color_codes=True)
 ```
 
+
+```python
+# __SOLUTION__ 
+import numpy as np
+import pandas as pd
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+import math
+import random 
+
+import seaborn as sns
+sns.set(color_codes=True)
+```
+
  First, create a population of 1000 elements with a mean of 100 and a standard deviation of 20.
 
 
@@ -51,6 +65,30 @@ pop = np.random.normal(100, 20, 1000)
 pop.dtype
 sns.distplot(pop)
 ```
+
+
+```python
+# __SOLUTION__ 
+# Create a population with mean=100 and sd=20 and size = 1000
+pop = np.random.normal(100, 20, 1000)
+pop.dtype
+sns.distplot(pop)
+```
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
+      warnings.warn("The 'normed' kwarg is deprecated, and has been "
+
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a16b112e8>
+
+
+
+
+![png](index_files/index_5_2.png)
+
 
 Now take two samples from this population and comment on the difference between their means and standard deviations. How would you ensure the independence between the elements of these samples? 
 
@@ -69,6 +107,44 @@ sample2 = np.random.choice(pop,100,replace=True)
 print ("Sample 2 Summary")
 stats.describe(sample2)
 ```
+
+
+```python
+# __SOLUTION__ 
+k = 100
+sample1 = np.random.choice(pop,100,replace=True)
+
+print ("Sample 1 Summary")
+stats.describe(sample1)
+```
+
+    Sample 1 Summary
+
+
+
+
+
+    DescribeResult(nobs=100, minmax=(49.39858743171358, 160.83891396687696), mean=103.52532536982363, variance=480.18848073679465, skewness=0.002561077472216908, kurtosis=-0.19471348626255125)
+
+
+
+
+```python
+# __SOLUTION__ 
+sample2 = np.random.choice(pop,100,replace=True)
+print ("Sample 2 Summary")
+stats.describe(sample2)
+```
+
+    Sample 2 Summary
+
+
+
+
+
+    DescribeResult(nobs=100, minmax=(49.645725110363266, 147.53574183135234), mean=98.62208317036112, variance=455.56057723567864, skewness=0.07013521819488366, kurtosis=-0.3496556715344359)
+
+
 
 You can see can see that if you took two samples from this population, the difference between the mean of samples 1 and 2 is very small (this can be tried repeatedly). You must sample with replacement in order to ensure the independence assumption between elements of the sample. 
 
@@ -91,6 +167,41 @@ plt.legend()
 plt.show()
 
 ```
+
+
+```python
+# __SOLUTION__ 
+# test the sample means
+stats.ttest_ind(sample1, sample2)
+```
+
+
+
+
+    Ttest_indResult(statistic=1.602889731813143, pvalue=0.11055304241933098)
+
+
+
+
+```python
+# __SOLUTION__ 
+plt.figure("Test Samples")
+sns.distplot(sample1, label='Sample1') 
+sns.distplot(sample2, label='Sample2')
+plt.legend()
+plt.show()
+
+```
+
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
+      warnings.warn("The 'normed' kwarg is deprecated, and has been "
+    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
+      warnings.warn("The 'normed' kwarg is deprecated, and has been "
+
+
+
+![png](index_files/index_15_1.png)
+
 
 ## Simulating Type I and II errors
 
@@ -149,6 +260,51 @@ def type_1_error(population, num_tests, alpha_set):
     pass
 ```
 
+
+```python
+# __SOLUTION__ 
+def type_1_error(population, num_tests, alpha_set):
+    """
+    Parameters
+    ----------
+    population: ndarray
+        A random normal distribution
+    num_tests: int
+        The number of hypothesis tests to be computed
+    alpha_set: list
+        List of alpha levels
+    
+    Returns
+    ----------
+    sig_tests : DataFrame
+        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+    """
+    columns = ['type_1_error','p_val','alpha']
+    sig_tests = pd.DataFrame(columns=columns)
+    counter = 0
+    
+    for i in range(1,num_tests+1):
+        
+        for alpha in alpha_set:
+            
+            # take two samples from the same population
+            samp1 = np.random.choice(population,100,replace=True)
+            samp2 = np.random.choice(population,100,replace=True)
+            
+            # test sample means
+            result = stats.ttest_ind(samp1, samp2)
+            
+            # evaluate whether null hypothesis is rejected or not
+            if result[1] < alpha:
+                 sig_tests.loc[counter] = [1, result[1], alpha]
+            else:
+                 sig_tests.loc[counter] = [0, result[1], alpha]
+
+            counter += 1
+            
+    return sig_tests
+```
+
 Now we have to summarize the results, this is done using pandas groupby() method which sums the "type_1_error" column for each level of alpha. The groupby method iterates over each value of alpha, selecting the type 1 error column for all rows with a specific level of alpha and then applies the sum function to the selection. 
 
 What's the relationship between alpha and Type 1 errors?
@@ -163,6 +319,34 @@ sig_tests_1 = type_1_error(pop, num_tests, alpha_set)
 group_error = sig_tests.groupby('alpha')['type_1_error'].sum()
 group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 ```
+
+
+```python
+# __SOLUTION__ 
+# group type 1 error by values of alpha
+pop = np.random.normal(100, 20, 1000)
+num_tests = 1000
+alpha_set = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
+sig_tests_1 = type_1_error(pop, num_tests, alpha_set)
+group_error = sig_tests_1.groupby('alpha')['type_1_error'].sum()
+group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
+```
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-1-38bd874a0f40> in <module>()
+          1 # group type 1 error by values of alpha
+    ----> 2 pop = np.random.normal(100, 20, 1000)
+          3 numTests = 1000
+          4 alphaSet = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
+          5 sig_tests_1 = type_1_error(pop, numTests, alphaSet)
+
+
+    NameError: name 'np' is not defined
+
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE I errors also increase. 
 
@@ -221,6 +405,55 @@ def type_2_error(population, population_2, num_tests, alpha_set):
     pass
 ```
 
+
+```python
+# __SOLUTION__ 
+def type_2_error(population, population_2, num_tests, alpha_set):
+    
+    """
+    Parameters
+    ----------
+    population: ndarray
+        A random normal distribution
+    population_2: ndarray
+        A different random normal distribution
+    num_tests: int
+        The number of hypothesis tests to be computed
+    alpha_set: list
+        List of alpha levels
+    
+    Returns
+    ----------
+    sig_tests : DataFrame
+        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+    """
+    
+    columns = ['type_2_error','p_val','alpha']
+    sig_tests = pd.DataFrame(columns=columns)
+    counter = 0
+    
+    for i in range(1,num_tests+1):
+        
+        for alpha in alpha_set:
+            
+            # take two samples from the same population
+            samp1 = np.random.choice(population,100,replace=True)
+            samp2 = np.random.choice(population_2,100,replace=True)
+            
+            # test sample means
+            result = stats.ttest_ind(samp1, samp2)
+            
+            # evaluate whether null hypothesis is rejected or not
+            if result[1] > alpha:
+                 sig_tests.loc[counter] = [1, result[1], alpha]
+            else:
+                 sig_tests.loc[counter] = [0, result[1], alpha]
+
+            counter += 1
+            
+    return sig_tests
+```
+
 Now, create a visualization that will represent each one of these decisions. What's the relationship between alpha and Type 2 errors?
 
 
@@ -234,6 +467,30 @@ sig_tests_2 = type_2_error(pop,pop2,num_tests,alpha_set)
 group_error2 = sig_tests_2.groupby('alpha')['type_2_error'].sum()
 group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 ```
+
+
+```python
+# __SOLUTION__ 
+pop = np.random.normal(100, 20, 1000)
+pop2 = np.random.normal(110, 20, 1000)
+num_tests = 1000
+alpha_set = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
+sig_tests_2 = type_2_error(pop,pop2,num_tests,alpha_set)
+
+group_error2 = sig_tests_2.groupby('alpha')['type_2_error'].sum()
+group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
+```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a22535e80>
+
+
+
+
+![png](index_files/index_27_1.png)
+
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE II errors decreases. 
 
