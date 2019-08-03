@@ -144,10 +144,80 @@ def type_1_error(population, num_tests, alpha_set):
     Returns
     ----------
     sig_tests : DataFrame
-        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+        A dataframe containing the columns 'type_1_error', 'p_value', and 'alpha'
     """
     pass
+# Example dataframe for 1 test below
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type_1_error</th>
+      <th>p_value</th>
+      <th>alpha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.483709</td>
+      <td>0.001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.363442</td>
+      <td>0.010</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.307050</td>
+      <td>0.050</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.747468</td>
+      <td>0.100</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.227174</td>
+      <td>0.200</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+      <td>0.560323</td>
+      <td>0.500</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 Now we have to summarize the results, this is done using pandas groupby() method which sums the "type_1_error" column for each level of alpha. The groupby method iterates over each value of alpha, selecting the type 1 error column for all rows with a specific level of alpha and then applies the sum function to the selection. 
 
@@ -160,7 +230,7 @@ pop = None
 num_tests = None
 alpha_set = None
 sig_tests_1 = type_1_error(pop, num_tests, alpha_set)
-group_error = sig_tests.groupby('alpha')['type_1_error'].sum()
+group_error = sig_tests_1.groupby('alpha')['type_1_error'].sum()
 group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 ```
 
@@ -199,27 +269,98 @@ To test your function:
 
 
 ```python
-def type_2_error(population, population_2, num_tests, alpha_set):
+# def type_2_error(population, population_2, num_tests, alpha_set):
     
-    """
-    Parameters
-    ----------
-    population: ndarray
-        A random normal distribution
-    population_2: ndarray
-        A different random normal distribution
-    num_tests: int
-        The number of hypothesis tests to be computed
-    alpha_set: list
-        List of alpha levels
+#     """
+#     Parameters
+#     ----------
+#     population: ndarray
+#         A random normal distribution
+#     population_2: ndarray
+#         A different random normal distribution
+#     num_tests: int
+#         The number of hypothesis tests to be computed
+#     alpha_set: list
+#         List of alpha levels
     
-    Returns
-    ----------
-    sig_tests : DataFrame
-        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
-    """
-    pass
+#     Returns
+#     ----------
+#     sig_tests : DataFrame
+#         A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+#     """
+#     pass
+
+type_2_error(pop,pop2,1,alpha_set)
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type_2_error</th>
+      <th>p_val</th>
+      <th>alpha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.000997</td>
+      <td>0.001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>0.210364</td>
+      <td>0.010</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.000079</td>
+      <td>0.050</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.001493</td>
+      <td>0.100</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.000048</td>
+      <td>0.200</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+      <td>0.001294</td>
+      <td>0.500</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 Now, create a visualization that will represent each one of these decisions. What's the relationship between alpha and Type 2 errors?
 
