@@ -52,19 +52,15 @@ pop.dtype
 sns.distplot(pop)
 ```
 
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
-      warnings.warn("The 'normed' kwarg is deprecated, and has been "
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a25091470>
 
 
 
 
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a16b112e8>
-
-
-
-
-![png](index_files/index_3_2.png)
+![png](index_files/index_3_1.png)
 
 
 Now take two samples from this population and comment on the difference between their means and standard deviations. How would you ensure the independence between the elements of these samples? 
@@ -196,9 +192,9 @@ def type_1_error(population, num_tests, alpha_set):
     Returns
     ----------
     sig_tests : DataFrame
-        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+        A dataframe containing the columns 'type_1_error', 'p_value', and 'alpha'
     """
-    columns = ['type_1_error','p_val','alpha']
+    columns = ['type_1_error','p_value','alpha']
     sig_tests = pd.DataFrame(columns=columns)
     counter = 0
     
@@ -240,19 +236,14 @@ group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-38bd874a0f40> in <module>()
-          1 # group type 1 error by values of alpha
-    ----> 2 pop = np.random.normal(100, 20, 1000)
-          3 numTests = 1000
-          4 alphaSet = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
-          5 sig_tests_1 = type_1_error(pop, numTests, alphaSet)
 
 
-    NameError: name 'np' is not defined
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a2546e748>
+
+
+
+
+![png](index_files/index_13_1.png)
 
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE I errors also increase. 
@@ -353,7 +344,7 @@ group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a22535e80>
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a25ebe630>
 
 
 
