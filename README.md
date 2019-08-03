@@ -75,19 +75,15 @@ pop.dtype
 sns.distplot(pop)
 ```
 
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
-      warnings.warn("The 'normed' kwarg is deprecated, and has been "
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a25091470>
 
 
 
 
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a16b112e8>
-
-
-
-
-![png](index_files/index_5_2.png)
+![png](index_files/index_5_1.png)
 
 
 Now take two samples from this population and comment on the difference between their means and standard deviations. How would you ensure the independence between the elements of these samples? 
@@ -255,10 +251,80 @@ def type_1_error(population, num_tests, alpha_set):
     Returns
     ----------
     sig_tests : DataFrame
-        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+        A dataframe containing the columns 'type_1_error', 'p_value', and 'alpha'
     """
     pass
+# Example dataframe for 1 test below
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type_1_error</th>
+      <th>p_value</th>
+      <th>alpha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.483709</td>
+      <td>0.001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.363442</td>
+      <td>0.010</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.307050</td>
+      <td>0.050</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.747468</td>
+      <td>0.100</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.227174</td>
+      <td>0.200</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+      <td>0.560323</td>
+      <td>0.500</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 
 ```python
@@ -277,9 +343,9 @@ def type_1_error(population, num_tests, alpha_set):
     Returns
     ----------
     sig_tests : DataFrame
-        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+        A dataframe containing the columns 'type_1_error', 'p_value', and 'alpha'
     """
-    columns = ['type_1_error','p_val','alpha']
+    columns = ['type_1_error','p_value','alpha']
     sig_tests = pd.DataFrame(columns=columns)
     counter = 0
     
@@ -316,7 +382,7 @@ pop = None
 num_tests = None
 alpha_set = None
 sig_tests_1 = type_1_error(pop, num_tests, alpha_set)
-group_error = sig_tests.groupby('alpha')['type_1_error'].sum()
+group_error = sig_tests_1.groupby('alpha')['type_1_error'].sum()
 group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 ```
 
@@ -333,19 +399,14 @@ group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-38bd874a0f40> in <module>()
-          1 # group type 1 error by values of alpha
-    ----> 2 pop = np.random.normal(100, 20, 1000)
-          3 numTests = 1000
-          4 alphaSet = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
-          5 sig_tests_1 = type_1_error(pop, numTests, alphaSet)
 
 
-    NameError: name 'np' is not defined
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a2546e748>
+
+
+
+
+![png](index_files/index_21_1.png)
 
 
 Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE I errors also increase. 
@@ -383,27 +444,98 @@ To test your function:
 
 
 ```python
-def type_2_error(population, population_2, num_tests, alpha_set):
+# def type_2_error(population, population_2, num_tests, alpha_set):
     
-    """
-    Parameters
-    ----------
-    population: ndarray
-        A random normal distribution
-    population_2: ndarray
-        A different random normal distribution
-    num_tests: int
-        The number of hypothesis tests to be computed
-    alpha_set: list
-        List of alpha levels
+#     """
+#     Parameters
+#     ----------
+#     population: ndarray
+#         A random normal distribution
+#     population_2: ndarray
+#         A different random normal distribution
+#     num_tests: int
+#         The number of hypothesis tests to be computed
+#     alpha_set: list
+#         List of alpha levels
     
-    Returns
-    ----------
-    sig_tests : DataFrame
-        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
-    """
-    pass
+#     Returns
+#     ----------
+#     sig_tests : DataFrame
+#         A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+#     """
+#     pass
+
+type_2_error(pop,pop2,1,alpha_set)
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type_2_error</th>
+      <th>p_val</th>
+      <th>alpha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.000997</td>
+      <td>0.001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>0.210364</td>
+      <td>0.010</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.000079</td>
+      <td>0.050</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.001493</td>
+      <td>0.100</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.000048</td>
+      <td>0.200</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+      <td>0.001294</td>
+      <td>0.500</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 
 
 ```python
@@ -484,7 +616,7 @@ group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a22535e80>
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a25ebe630>
 
 
 
