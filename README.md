@@ -444,28 +444,27 @@ To test your function:
 
 
 ```python
-# def type_2_error(population, population_2, num_tests, alpha_set):
+def type_2_error(population, population_2, num_tests, alpha_set):
     
-#     """
-#     Parameters
-#     ----------
-#     population: ndarray
-#         A random normal distribution
-#     population_2: ndarray
-#         A different random normal distribution
-#     num_tests: int
-#         The number of hypothesis tests to be computed
-#     alpha_set: list
-#         List of alpha levels
+    """
+    Parameters
+    ----------
+    population: ndarray
+        A random normal distribution
+    population_2: ndarray
+        A different random normal distribution
+    num_tests: int
+        The number of hypothesis tests to be computed
+    alpha_set: list
+        List of alpha levels
     
-#     Returns
-#     ----------
-#     sig_tests : DataFrame
-#         A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
-#     """
-#     pass
-
-type_2_error(pop,pop2,1,alpha_set)
+    Returns
+    ----------
+    sig_tests : DataFrame
+        A dataframe containing the columns 'type_2_error', 'p_value', and 'alpha'
+    """
+    pass
+# Example dataframe for 1 test below
 ```
 
 
