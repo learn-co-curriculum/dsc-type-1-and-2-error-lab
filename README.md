@@ -1,9 +1,9 @@
 
-# Type 1 and Type 2 errors - Lab
+# Type I and Type II errors - Lab
 
 ## Introduction
 
-In this lab, you'll run some of your own simulations to learn more about type 1 and type 2 errors. Remember that, the result of a statistical hypothesis test and the corresponding decision of whether to reject or accept the null hypothesis is not infallible. A test provides evidence for or against the null hypothesis and then you decide whether to accept or reject it based on that evidence, but the evidence may lack the strength to arrive at the correct conclusion. Incorrect conclusions made from hypothesis tests fall in one of two categories, i.e. [Type 1 and Type 2 errors](https://en.wikipedia.org/wiki/Type_I_and_type_II_errors) By running some of these simulations, you should have a better idea of why a 95% confidence level is often used for hypothesis testing.
+In this lab, you'll run some of your own simulations to learn more about type I and type II errors. Remember that, the result of a statistical hypothesis test and the corresponding decision of whether to reject or accept the null hypothesis, is not infallible. A test provides evidence for or against the null hypothesis and then you decide whether to accept or reject it based on that evidence, but the evidence may lack the strength to arrive at the correct conclusion. Incorrect conclusions made from hypothesis tests fall in one of two categories, i.e. [Type I and Type II errors](https://en.wikipedia.org/wiki/Type_I_and_type_II_errors). By running some of these simulations, you should have a better idea of why a 95% confidence level is often used for hypothesis testing.
 
 
 ## Objectives
@@ -12,7 +12,7 @@ You will be able to:
 
 * Explain why alpha = 0.05 is chosen as the cutoff point for rejecting the null hypothesis in most scientific experiments
 * Simulate Type I and Type II errors with alpha control to observe the output of an experiment
-* Describe and differentiate between TYPE I and TYPE II errors
+* Describe and differentiate between Type I and Type II errors
 * Understand alpha and beta for representing false positive and false negative values
 
 ## Alpha and Beta
@@ -27,7 +27,7 @@ Beta is directly related to study power (Power = $1 - \beta$) which you will inv
 
 
 
-Now you will attempt to create a simulation to visualize this phenomenon using python.
+Now you will attempt to create a simulation to visualize this phenomenon using Python.
 
 
 ```python
@@ -55,7 +55,7 @@ sns.distplot(pop)
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a25091470>
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a201e9550>
 
 
 
@@ -80,7 +80,7 @@ stats.describe(sample1)
 
 
 
-    DescribeResult(nobs=100, minmax=(49.39858743171358, 160.83891396687696), mean=103.52532536982363, variance=480.18848073679465, skewness=0.002561077472216908, kurtosis=-0.19471348626255125)
+    DescribeResult(nobs=100, minmax=(66.40851232603063, 161.62571006846179), mean=104.35830962968306, variance=362.19033587986775, skewness=0.3616388937115025, kurtosis=0.01471382255051834)
 
 
 
@@ -97,15 +97,15 @@ stats.describe(sample2)
 
 
 
-    DescribeResult(nobs=100, minmax=(49.645725110363266, 147.53574183135234), mean=98.62208317036112, variance=455.56057723567864, skewness=0.07013521819488366, kurtosis=-0.3496556715344359)
+    DescribeResult(nobs=100, minmax=(53.4503814938987, 142.2385929977146), mean=98.15819084577764, variance=423.12632108466056, skewness=-0.02741488284820187, kurtosis=-0.7119732006166188)
 
 
 
-You can see can see that if you took two samples from this population, the difference between the mean of samples 1 and 2 is very small (this can be tried repeatedly). You must sample with replacement in order to ensure the independence assumption between elements of the sample. 
+You can see that if you took two samples from this population, the difference between the mean of samples 1 and 2 is very small (this can be tried repeatedly). You must sample with replacement in order to ensure the independence assumption between elements of the sample. 
 
-There is, however, still a probability of seeing a very large difference between values, even though they're estimates of the same population parameters. In a statistical setting, you'd interpret these unusually large differences as evidence that the two samples are statistically different. It depends on how you define statistical significance. In statistical tests, this is done by setting a significance threshold $\alpha$  (alpha). Alpha controls how often we'll get a type 1 error. A type 1 error occurs when the statistical test erroneously indicates a significant result.
+There is, however, still a probability of seeing a very large difference between values, even though they're estimates of the same population parameters. In a statistical setting, you'd interpret these unusually large differences as evidence that the two samples are statistically different. It depends on how you define statistical significance. In statistical tests, this is done by setting a significance threshold $\alpha$  (alpha). Alpha controls how often we'll get a type I error. A type I error occurs when the statistical test erroneously indicates a significant result.
 
-You can run two-sample t-test with independence assumption on these samples and, as expected, the null hypothesis will fail to be rejected due to similarities between distributions. You can also visualize the distribution to confirm the similarity between means and SDs. 
+You can run a two-sample t-test with the independence assumption on these samples and, as expected, the null hypothesis will fail to be rejected due to similarities between distributions. You can also visualize the distribution to confirm the similarity between means and SDs. 
 
 
 ```python
@@ -116,7 +116,7 @@ stats.ttest_ind(sample1, sample2)
 
 
 
-    Ttest_indResult(statistic=1.602889731813143, pvalue=0.11055304241933098)
+    Ttest_indResult(statistic=2.2124710940967014, pvalue=0.0280770750981863)
 
 
 
@@ -130,43 +130,37 @@ plt.show()
 
 ```
 
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
-      warnings.warn("The 'normed' kwarg is deprecated, and has been "
-    /Users/forest.polchow/anaconda3/lib/python3.6/site-packages/matplotlib/axes/_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
-      warnings.warn("The 'normed' kwarg is deprecated, and has been "
 
-
-
-![png](index_files/index_9_1.png)
+![png](index_files/index_9_0.png)
 
 
 ## Simulating Type I and II errors
 
 ### Type I error
-Remember that when a hypothesis test is being performed, scientists are trying to determine if two samples are from the same population or not. When a hypothesis is rejected, they are concluding that a sample must have come from a different population. Type I error describes a situation where you reject the null hypothesis when it is actually true. It assumes two samples come from a _different_ population when, in reality, they are from the _same_ population. This type of error is also known as a "false positive" or "false hit". The type 1 error rate is equal to the significance level $\alpha$, so setting a higher confidence level (and therefore lower alpha) reduces the chances of getting a false positive. 
+Remember that when a hypothesis test is being performed, scientists are trying to determine if two samples are from the same population or not. When a hypothesis is rejected, they are concluding that a sample must have come from a different population. Type I error describes a situation where you reject the null hypothesis when it is actually true. It assumes two samples come from a _different_ population when, in reality, they are from the _same_ population. This type of error is also known as a "false positive" or "false hit". The type I error rate is equal to the significance level $\alpha$, so setting a higher confidence level (and therefore lower $\alpha$) reduces the chances of getting a false positive. 
 
 
 
-### How alpha affects the prevalence of TYPE I errors.
+### How alpha affects the prevalence of Type I errors.
 
-Next, we shall see how alpha affects the rate of type 1 errors. 
+Next, we shall see how alpha affects the rate of type I errors. 
 
-**Exercise:** Write a function `type_1_error` in Python to encapsulate the code shown above in order to repeat hypothesis tests on two randomly drawn distributions. The t-test will mostly fail to reject the null hypothesis, except, when by random chance you get a set of **extremely** different samples thus reject the null hypothesis (TYPE I ERROR). The frequency of such bad results depends upon the value of alpha. 
+**Exercise:** Write a function `type_1_error` in Python to encapsulate the code shown above in order to repeat hypothesis tests on two randomly drawn distributions. The t-test will mostly fail to reject the null hypothesis, except, when by random chance you get a set of **extremely** different samples thus reject the null hypothesis (type I error). The frequency of such bad results depends upon the value of alpha. 
 
 `type_1_error` should take in the parameters:
 
-* population: (numpy array) a random normal distribution
-* num_tests: (int) specifies the number of hypothesis tests to compute
-* alphas: (list) a list of the alpha levels at which you are testing
+* `population`: (NumPy array) a random normal distribution
+* `num_tests`: (int) specifies the number of hypothesis tests to compute
+* `alphas`: (list) a list of the alpha levels at which you are testing
 
 `type_1_error` should return:
 
-* sig_tests: (DataFrame) a dataframe that has the columns 'type_1_error', 'p_value', 'alpha'
+* `sig_tests`: (DataFrame) a dataframe that has the columns 'type_1_error', 'p_value', 'alpha'
 
 Within `type_1_error`, you should:
 
-1. Repeatedly take two random samples from population and run independent t-tests.    
-2. Store P_value, alpha and a boolean variable to show whether the null hypothesis ** was rejected ** or not (i.e. if p-value is less than alpha), for each test
+1. Repeatedly take two random samples from `population` and run independent t-tests.    
+2. Store the p-value, alpha, and a boolean variable to show whether the null hypothesis **was rejected** or not (i.e. if p-value is less than alpha), for each test
 
 To test your function:
 
@@ -220,13 +214,13 @@ def type_1_error(population, num_tests, alpha_set):
     return sig_tests
 ```
 
-Now we have to summarize the results, this is done using pandas groupby() method which sums the "type_1_error" column for each level of alpha. The groupby method iterates over each value of alpha, selecting the type 1 error column for all rows with a specific level of alpha and then applies the sum function to the selection. 
+Now we have to summarize the results, this is done using the pandas `groupby()` method which sums the `type_1_error` column for each level of alpha. The `groupby()` method iterates over each value of alpha, selecting the type I error column for all rows with a specific level of alpha, and then applies the sum function to the selection. 
 
-What's the relationship between alpha and Type 1 errors?
+What's the relationship between alpha and type I errors?
 
 
 ```python
-# group type 1 error by values of alpha
+# group type I error by values of alpha
 pop = np.random.normal(100, 20, 1000)
 num_tests = 1000
 alpha_set = [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
@@ -238,7 +232,7 @@ group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a2546e748>
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a2112c240>
 
 
 
@@ -246,36 +240,36 @@ group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 ![png](index_files/index_13_1.png)
 
 
-Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE I errors also increase. 
+The grouped data clearly shows that as value of alpha is increases from .001 to .5, the probability of type I errors also increases. 
 
 ### Type II error 
 
 This error describes a situation where you fail to reject the null hypothesis when it is actually false. Type II error is also known as a "false negative" or "miss". The higher your confidence level, the more likely you are to make a type II error.
 
-## How alpha affects the prevalence of TYPE II errors.
+## How alpha affects the prevalence of Type II errors.
 
-**Exercise** Write a function called `type_2_error` similar to the above except samples should be taken from two different populations.  The hypothesis test should, in most cases, reject the null hypothesis as the samples belong to different populations, except, in extreme cases where there is no significant difference between samples i.e. a TYPE II error (False Negatives). Your function should demonstrate how the rate of false negatives is affected by alpha. 
+**Exercise:** Write a function called `type_2_error` similar to the above except samples should be taken from two different populations.  The hypothesis test should, in most cases, reject the null hypothesis as the samples belong to different populations, except, in extreme cases where there is no significant difference between samples i.e. a type II error (False Negatives). Your function should demonstrate how the rate of false negatives is affected by alpha. 
 
 `type_2_error` should take in the parameters:
 
-* population: (numpy array) a random normal distribution
-* population_2: (numpy array) a random normal distribution with a different mean than the population
-* num_tests: (int) specifies the number of hypothesis tests to compute
-* alphas: (list) a list of the alpha levels at which you are testing
+* `population`: (NumPy array) a random normal distribution
+* `population_2`: (NumPy array) a random normal distribution with a different mean than the population
+* `num_tests`: (int) specifies the number of hypothesis tests to compute
+* `alphas`: (list) a list of the alpha levels at which you are testing
 
 `type_2_error` should return:
 
-* sig_tests: (DataFrame) a dataframe that has the columns 'type_2_error', 'p_value', 'alpha'
+* `sig_tests`: (DataFrame) a dataframe that has the columns 'type_2_error', 'p_value', 'alpha'
 
 Within `type_2_error`, you should:
 
 1. Repeatedly take two random samples from population and run independent t-tests.    
-2. Store p_value, alpha and a boolean variable to show whether the null hypothesis **failed to be rejected** or not (i.e. if p-value is less than alpha), for each test
+2. Store p_value, alpha, and a boolean variable to show whether the null hypothesis **failed to be rejected** or not (i.e. if p-value is less than alpha), for each test
 
 To test your function:
 
 1. Create a population distribution with a mean of 100, a standard deviation of 20, and a size of 1000 
-2. Create a second population distribution with a mean of 110, a standard deviation of 20 and a size of 1000
+2. Create a second population distribution with a mean of 110, a standard deviation of 20, and a size of 1000
 3. Specify the number of hypothesis tests to be 1000
 4. Create a list of alphas =  [0.001, 0.01, 0.05, 0.1, 0.2, 0.5]
 
@@ -327,7 +321,7 @@ def type_2_error(population, population_2, num_tests, alpha_set):
     return sig_tests
 ```
 
-Now, create a visualization that will represent each one of these decisions. What's the relationship between alpha and Type 2 errors?
+Now, create a visualization that will represent each one of these decisions. What's the relationship between alpha and type II errors?
 
 
 ```python
@@ -344,7 +338,7 @@ group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a25ebe630>
+    <matplotlib.axes._subplots.AxesSubplot at 0x10cfd7128>
 
 
 
@@ -352,7 +346,7 @@ group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 ![png](index_files/index_17_1.png)
 
 
-Grouped data clearly shows that as value of alpha is increases from .001 to 0.5, the probability of TYPE II errors decreases. 
+The grouped data clearly shows that as value of alpha is increased from .001 to .5, the probability of type II errors decreases. 
 
 ### Why is an α level of 0.05 chosen as a cut-off for statistical significance?
 
@@ -362,18 +356,18 @@ The $\alpha$ level of 0.05 is considered s good balance to avoid excessive type 
 If you decide to use a large value for alpha : 
 
 * Increases the chance of rejecting the null hypothesis
-* The risk of a Type II error (false negative) is REDUCED
-* Risk of a Type I error (false positive) is INCREASED
+* The risk of a type II error (false negative) is REDUCED
+* Risk of a type I error (false positive) is INCREASED
 
 Similarly, if you decide to use a very small value of alpha, it'll change the outcome as:
 * Increases the chance of accepting the null hypothesis
 * The risk of a Type I error (false positive) is REDUCED
 * Risk of a Type II error (false negative) is INCREASED
 
-From above, you can see that in statistical hypothesis testing, the more you try and avoid a Type I error (false positive), the more likely a Type II error (false negative) will occur. 
+From above, you can see that in statistical hypothesis testing, the more you try and avoid a type I error (false positive), the more likely a type II error (false negative) will occur. 
 
 ## Summary
 
-The statistical key point here is that there is always a trade off between false positives and false negatives. By increasing alpha, the number of false positives increases, but the number of false negatives decreases as shown in the bar graphs. The value of $\alpha$ = 0.05 is considered a reasonable compromise between these two types of errors. Within the concept of "significance" there is embedded a trade-off between these two types of errors. 
+The key statistical point here is that there is always a trade off between false positives and false negatives. By increasing alpha, the number of false positives increases, but the number of false negatives decreases as shown in the bar graphs. The value of $\alpha$ = 0.05 is considered a reasonable compromise between these two types of errors. Within the concept of "significance," there is embedded a trade-off between these two types of errors. 
 
- Think of "significance" as a compromise between false positives and negatives, not as absolute determination.
+Think of "significance" as a compromise between false positives and negatives, not as absolute determination.
