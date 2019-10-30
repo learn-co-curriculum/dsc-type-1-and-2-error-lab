@@ -1,5 +1,5 @@
 
-# Type I and Type II errors - Lab
+# Type I and Type II Errors - Lab
 
 ## Introduction
 
