@@ -10,10 +10,9 @@ In this lab, you'll run some of your own simulations to learn more about type I 
 
 You will be able to:
 
-* Explain why alpha = 0.05 is chosen as the cutoff point for rejecting the null hypothesis in most scientific experiments
-* Simulate Type I and Type II errors with alpha control to observe the output of an experiment
-* Describe and differentiate between Type I and Type II errors
-* Understand alpha and beta for representing false positive and false negative values
+* Differentiate how Type I and Type II errors relate to the p and z-value
+* Describe the relationship between alpha and Type I errors
+* Create simulations and visualizations to represent scenarios involving Type I and Type II errors
 
 ## Alpha and Beta
 
