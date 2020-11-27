@@ -193,14 +193,14 @@ def type_1_error(population, num_tests, alpha_set):
     
     for i in range(1,num_tests+1):
         
-        for alpha in alpha_set:
+        # take two samples from the same population
+        samp1 = np.random.choice(population,100,replace=True)
+        samp2 = np.random.choice(population,100,replace=True)
             
-            # take two samples from the same population
-            samp1 = np.random.choice(population,100,replace=True)
-            samp2 = np.random.choice(population,100,replace=True)
-            
-            # test sample means
-            result = stats.ttest_ind(samp1, samp2)
+        # test sample means
+        result = stats.ttest_ind(samp1, samp2)
+        
+        for alpha in alpha_set:    
             
             # evaluate whether null hypothesis is rejected or not
             if result[1] < alpha:
@@ -300,14 +300,14 @@ def type_2_error(population, population_2, num_tests, alpha_set):
     
     for i in range(1,num_tests+1):
         
-        for alpha in alpha_set:
+        # take two samples from the same population
+        samp1 = np.random.choice(population,100,replace=True)
+        samp2 = np.random.choice(population_2,100,replace=True)
+
+        # test sample means
+        result = stats.ttest_ind(samp1, samp2)
             
-            # take two samples from the same population
-            samp1 = np.random.choice(population,100,replace=True)
-            samp2 = np.random.choice(population_2,100,replace=True)
-            
-            # test sample means
-            result = stats.ttest_ind(samp1, samp2)
+        for alpha in alpha_set:    
             
             # evaluate whether null hypothesis is rejected or not
             if result[1] > alpha:
