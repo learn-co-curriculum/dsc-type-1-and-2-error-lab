@@ -1,4 +1,3 @@
-
 # Type I and Type II Errors - Lab
 
 ## Introduction
@@ -166,7 +165,7 @@ group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 
 The grouped data clearly shows that as value of alpha is increases from .001 to .5, the probability of type I errors also increases. 
 
-### Type II error 
+## Type II error 
 
 This error describes a situation where you fail to reject the null hypothesis when it is actually false. Type II error is also known as a "false negative" or "miss". The higher your confidence level, the more likely you are to make a type II error.
 
