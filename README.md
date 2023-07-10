@@ -489,7 +489,7 @@ The grouped data clearly shows that as value of alpha is increased from .001 to 
 
 ### Why is an α level of 0.05 chosen as a cut-off for statistical significance?
 
-The $\alpha$ level of 0.05 is considered s good balance to avoid excessive type I or type II errors. 
+The $\alpha$ level of 0.05 is considered a good balance to avoid excessive type I or type II errors. 
 
 
 If you decide to use a large value for alpha : 
