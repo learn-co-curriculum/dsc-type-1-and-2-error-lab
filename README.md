@@ -1,4 +1,3 @@
-
 # Type I and Type II Errors - Lab
 
 ## Introduction
@@ -59,7 +58,9 @@ sns.distplot(pop)
 
 
 
+    
 ![png](index_files/index_3_1.png)
+    
 
 
 Now take two samples from this population and comment on the difference between their means and standard deviations. How would you ensure the independence between the elements of these samples? 
@@ -130,7 +131,9 @@ plt.show()
 ```
 
 
+    
 ![png](index_files/index_9_0.png)
+    
 
 
 ## Simulating Type I and II errors
@@ -236,12 +239,14 @@ group_error.plot.bar(title = "TYPE I ERROR - FALSE POSITIVES")
 
 
 
+    
 ![png](index_files/index_13_1.png)
+    
 
 
 The grouped data clearly shows that as value of alpha is increases from .001 to .5, the probability of type I errors also increases. 
 
-### Type II error 
+## Type II error 
 
 This error describes a situation where you fail to reject the null hypothesis when it is actually false. Type II error is also known as a "false negative" or "miss". The higher your confidence level, the more likely you are to make a type II error.
 
@@ -342,7 +347,9 @@ group_error2.plot.bar(title = "Type II ERROR - FALSE NEGATIVES")
 
 
 
+    
 ![png](index_files/index_17_1.png)
+    
 
 
 The grouped data clearly shows that as value of alpha is increased from .001 to .5, the probability of type II errors decreases. 
