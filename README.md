@@ -61,7 +61,7 @@ sns.set(color_codes=True)
 # Create a population with mean=100 and sd=20 and size = 1000
 pop = np.random.normal(100, 20, 1000)
 pop.dtype
-sns.distplot(pop)
+sns.displot(pop)
 ```
 
 
@@ -70,7 +70,7 @@ sns.distplot(pop)
 # Create a population with mean=100 and sd=20 and size = 1000
 pop = np.random.normal(100, 20, 1000)
 pop.dtype
-sns.distplot(pop)
+sns.displot(pop)
 ```
 
 
@@ -157,8 +157,8 @@ stats.ttest_ind(sample1, sample2)
 
 ```python
 plt.figure("Test Samples")
-sns.distplot(sample1, label='Sample1') 
-sns.distplot(sample2, label='Sample2')
+sns.displot(sample1, label='Sample1') 
+sns.displot(sample2, label='Sample2')
 plt.legend()
 plt.show()
 
@@ -182,8 +182,8 @@ stats.ttest_ind(sample1, sample2)
 ```python
 # __SOLUTION__ 
 plt.figure("Test Samples")
-sns.distplot(sample1, label='Sample1') 
-sns.distplot(sample2, label='Sample2')
+sns.displot(sample1, label='Sample1') 
+sns.displot(sample2, label='Sample2')
 plt.legend()
 plt.show()
 
